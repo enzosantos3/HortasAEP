@@ -1,7 +1,9 @@
 /* --- Google Fonts --- */
+/* Importa as fontes Roboto e Lato do Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Lato:wght@400;700&display=swap');
 
 /* --- Variáveis de Cor e Estilo --- */
+/* Define variáveis CSS reutilizáveis para manter consistência visual */
 :root {
   --primary-green: #4CAF50;
   --dark-green: #388E3C;
@@ -17,12 +19,14 @@
 }
 
 /* --- Estilos Gerais --- */
+/* gera margens e paddings, define box-sizing padrão */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* Estilos base do corpo do site */ 
 body {
   font-family: 'Roboto', sans-serif;
   line-height: 1.6;
@@ -30,23 +34,27 @@ body {
   color: var(--text-color);
 }
 
+/* Container central com largura máxima */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
+/* Títulos com fonte Lato e cor personalizada */
 h1, h2, h3, h4 {
   font-family: 'Lato', sans-serif;
   font-weight: 700;
   color: var(--dark-green);
 }
 
+/* Tamanhos e espaçamentos dos títulos e parágrafos */
 h1 { font-size: 2.5rem; }
 h2 { font-size: 2rem; margin-bottom: 20px; }
 p { color: var(--light-text-color); margin-bottom: 10px; }
 
 /* --- Header --- */
+/* Estilo do cabeçalho com gradiente verde */
 .header {
   background: linear-gradient(to right, var(--primary-green), var(--dark-green));
   color: white;
@@ -54,6 +62,7 @@ p { color: var(--light-text-color); margin-bottom: 10px; }
   text-align: center;
 }
 
+/* Logo com alinhamento horizontal e ícone */
 .header-content .logo {
   display: flex;
   justify-content: center;
@@ -62,26 +71,31 @@ p { color: var(--light-text-color); margin-bottom: 10px; }
   margin-bottom: 10px;
 }
 
+/* Ícone de folha */
 .header-content .leaf-icon {
   font-size: 3rem;
 }
 
+/* Cor branca no título do header */
 .header-content h1 {
   color: white;
 }
 
+/* Subtítulo com tom verde claro */
 .header-content .subtitle {
   font-size: 1.1rem;
   color: var(--light-green);
 }
 
 /* --- Seção de Busca e Filtros --- */
+/* Área com campos de busca e filtros de seleção */
 .search-section {
   background-color: var(--card-bg-color);
   padding: 20px 0;
   border-bottom: 1px solid var(--border-color);
 }
 
+/* Container para os campos de busca/filtros */
 .search-container {
   display: flex;
   justify-content: space-between;
@@ -90,11 +104,13 @@ p { color: var(--light-text-color); margin-bottom: 10px; }
   gap: 20px;
 }
 
+/* Campo de busca com ícone */
 .search-box {
   position: relative;
   flex-grow: 1;
 }
 
+/* Ícone da lupa */
 .search-icon {
   position: absolute;
   top: 50%;
@@ -103,6 +119,7 @@ p { color: var(--light-text-color); margin-bottom: 10px; }
   color: var(--light-text-color);
 }
 
+/* Campo de input da busca */
 .search-input {
   width: 100%;
   padding: 12px 12px 12px 45px;
@@ -111,6 +128,7 @@ p { color: var(--light-text-color); margin-bottom: 10px; }
   font-size: 1rem;
 }
 
+/* Filtros alinhados em linha com espaçamento */
 .filters {
   display: flex;
   gap: 20px;
@@ -122,6 +140,7 @@ p { color: var(--light-text-color); margin-bottom: 10px; }
   margin-right: 8px;
 }
 
+/* Estilo dos selects dos filtros */
 .filter-select {
   padding: 10px;
   border: 1px solid var(--border-color);
@@ -130,17 +149,19 @@ p { color: var(--light-text-color); margin-bottom: 10px; }
 }
 
 /* --- Conteúdo Principal --- */
+/* Padding geral da seção principal */
 .main-content {
   padding: 40px 0;
 }
 
+/* Layout com duas colunas: mapa e lista */
 .content-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 30px;
 }
 
-/* Estilos de Card genéricos */
+/* --- Cards Reutilizáveis --- */
 .card {
   background-color: var(--card-bg-color);
   border-radius: var(--border-radius);
@@ -165,6 +186,7 @@ p { color: var(--light-text-color); margin-bottom: 10px; }
 }
 
 /* Mapa */
+/* Altura e largura do container do mapa */
 .map-container-real {
   height: 550px;
   width: 100%;

@@ -1,46 +1,51 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hortas Comunitárias de Maringá - Mapeamento Sustentável</title>
+<!DOCTYPE html> <!-- Define o tipo do documento como HTML5 -->
+<html lang="pt-BR"> <!-- Define o idioma principal do conteúdo da página como português do Brasil -->
 
-  <!-- Leaflet CSS -->
+<head>
+  <meta charset="UTF-8"> <!-- Define o conjunto de caracteres como UTF-8, permitindo acentos -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Torna a página responsiva em dispositivos móveis -->
+  <title>Hortas Comunitárias de Maringá - Mapeamento Sustentável</title> <!-- Título da aba do navegador -->
+
+  <!-- Importa os estilos do Leaflet (mapa interativo) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-        crossorigin=""/>
-  
-  <!-- Estilos locais -->
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+  <!-- Importa o arquivo de estilos locais (CSS customizado) -->
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
 
-  <!-- Header -->
+<body> <!-- Início do corpo da página -->
+
+  <!-- Cabeçalho da página -->
   <header class="header">
     <div class="container">
       <div class="header-content">
         <div class="logo">
-          <span class="leaf-icon">🌱</span>
-          <h1>Hortas Comunitárias de Maringá</h1>
+          <span class="leaf-icon">🌱</span> <!-- Ícone visual -->
+          <h1>Hortas Comunitárias de Maringá</h1> <!-- Título principal -->
         </div>
-        <p class="subtitle">Mapeamento das Hortas Comunitárias Sustentáveis de Maringá - PR</p>
+        <p class="subtitle">Mapeamento das Hortas Comunitárias Sustentáveis de Maringá - PR</p> <!-- Subtítulo descritivo -->
       </div>
     </div>
   </header>
 
-  <!-- Seção de Busca e Filtros -->
+  <!-- Seção de busca e filtros -->
   <section class="search-section">
     <div class="container">
       <div class="search-container">
+        <!-- Caixa de busca -->
         <div class="search-box">
-          <span class="search-icon">🔍</span>
+          <span class="search-icon">🔍</span> <!-- Ícone de lupa -->
           <input 
             type="text" 
             id="searchInput" 
             placeholder="Buscar horta por nome, bairro ou localização..."
-            class="search-input">
+            class="search-input"> <!-- Campo de entrada da busca -->
         </div>
+
+        <!-- Filtros de zona e status -->
         <div class="filters">
+          <!-- Filtro por zona -->
           <div class="filter-group">
             <label for="zoneFilter">Filtrar por Zona:</label>
             <select id="zoneFilter" class="filter-select">
@@ -52,6 +57,8 @@
               <option value="central">Zona Central</option>
             </select>
           </div>
+
+          <!-- Filtro por status -->
           <div class="filter-group">
             <label for="statusFilter">Filtrar por Status:</label>
             <select id="statusFilter" class="filter-select">
@@ -65,12 +72,12 @@
     </div>
   </section>
 
-  <!-- Conteúdo Principal -->
+  <!-- Conteúdo principal -->
   <main class="main-content">
     <div class="container">
-      <div class="content-grid">
+      <div class="content-grid"> <!-- Layout em grid com duas colunas -->
 
-        <!-- Mapa -->
+        <!-- Seção do mapa -->
         <div class="map-section">
           <div class="card">
             <div class="card-header">
@@ -80,15 +87,17 @@
               </h2>
             </div>
             <div class="card-content">
-              <div id="map" class="map-container-real"></div>
+              <div id="map" class="map-container-real"></div> <!-- Container do mapa Leaflet -->
             </div>
           </div>
         </div>
 
-        <!-- Lista de Hortas -->
+        <!-- Lista de hortas filtradas -->
         <div class="hortas-section">
           <div class="section-header">
-            <h2 class="section-title">Hortas Encontradas (<span id="hortasCount">0</span>)</h2>
+            <h2 class="section-title">Hortas Encontradas (<span id="hortasCount">0</span>)</h2> <!-- Contador de hortas -->
+            
+            <!-- Ordenação -->
             <div class="sort-controls">
               <label for="sortSelect">Ordenar por:</label>
               <select id="sortSelect" class="filter-select">
@@ -99,40 +108,42 @@
               </select>
             </div>
           </div>
-          <div id="hortasList" class="hortas-list">
-            <!-- JS insere hortas aqui -->
-          </div>
+
+          <!-- Local onde os cards das hortas são renderizados via JS -->
+          <div id="hortasList" class="hortas-list"></div>
         </div>
       </div>
 
-      <!-- Estatísticas -->
+      <!-- Estatísticas das hortas -->
       <section class="stats-section">
         <h2>Estatísticas das Hortas de Maringá</h2>
         <div class="stats-grid">
           <div class="stat-card">
-            <div class="stat-number" id="totalHortas">0</div>
+            <div class="stat-number" id="totalHortas">0</div> <!-- Total de hortas -->
             <div class="stat-label">Total de Hortas</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number" id="hortasAtivas">0</div>
+            <div class="stat-number" id="hortasAtivas">0</div> <!-- Hortas ativas -->
             <div class="stat-label">Hortas Ativas</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number" id="familiasBeneficiadas">0</div>
+            <div class="stat-number" id="familiasBeneficiadas">0</div> <!-- Famílias atendidas -->
             <div class="stat-label">Famílias Beneficiadas</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number" id="areaTotal">0</div>
+            <div class="stat-number" id="areaTotal">0</div> <!-- Área total -->
             <div class="stat-label">Área Total (m²)</div>
           </div>
         </div>
       </section>
 
-      <!-- Informações sobre o Programa -->
+      <!-- Informações sobre o programa -->
       <section class="program-info">
         <div class="info-card">
           <h2>Programa de Hortas Comunitárias de Maringá</h2>
           <p>O programa é uma iniciativa da Prefeitura de Maringá para promover segurança alimentar e sustentabilidade urbana.</p>
+          
+          <!-- Benefícios do programa -->
           <div class="program-benefits">
             <div class="benefit-item">
               <span class="benefit-icon">🥬</span>
@@ -159,12 +170,14 @@
         </div>
       </section>
 
-      <!-- Seção Educativa -->
+      <!-- Seção educativa -->
       <section class="educational-section">
         <div class="educational-header">
           <div class="book-icon">📚</div>
           <h2>Por que Hortas Comunitárias?</h2>
         </div>
+
+        <!-- Cartões de benefícios -->
         <div class="benefits-grid">
           <div class="benefit-card green-border">
             <div class="benefit-header">
@@ -173,6 +186,7 @@
             </div>
             <p>Produção local de alimentos, redução da pegada de carbono.</p>
           </div>
+
           <div class="benefit-card blue-border">
             <div class="benefit-header">
               <span class="benefit-icon">👥</span>
@@ -180,6 +194,7 @@
             </div>
             <p>Inclusão e laços comunitários mais fortes nos bairros.</p>
           </div>
+
           <div class="benefit-card green-border">
             <div class="benefit-header">
               <span class="benefit-icon">📚</span>
@@ -190,7 +205,7 @@
         </div>
       </section>
 
-      <!-- Participação -->
+      <!-- Participação cidadã -->
       <section class="participation-section">
         <h2>Como Participar das Hortas de Maringá?</h2>
         <div class="participation-content">
@@ -201,10 +216,13 @@
             <li>Partici das reuniões locais</li>
             <li>Contribua com tempo e conhecimento</li>
           </ol>
+          <!-- Informações de contato -->
           <div class="contact-info">
             <p><strong>Secretaria de Meio Ambiente:</strong> (44) 3901-1549</p>
             <p><strong>Email:</strong> meioambiente@maringa.pr.gov.br</p>
           </div>
+
+          <!-- Botão para site externo -->
           <button class="btn btn-blue" onclick="window.open('https://www.maringa.pr.gov.br/hortas-comunitarias', '_blank')">
             Saiba Mais no Site da Prefeitura
           </button>
@@ -213,7 +231,7 @@
     </div>
   </main>
 
-  <!-- Footer -->
+  <!-- Rodapé -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
@@ -228,18 +246,17 @@
     </div>
   </footer>
 
-  <!-- Modal de Loading -->
+  <!-- Modal de carregamento -->
   <div id="loadingModal" class="modal" style="display: none;">
     <div class="modal-content">
       <div class="loading-spinner"></div>
-      <p>Carregando...</p>
+      <p>Carregando...</p> <!-- Texto exibido durante o carregamento -->
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- Scripts: Leaflet e JavaScript principal -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-          crossorigin=""></script>
-  <script src="js/script.js"></script>
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="js/script.js"></script> <!-- Script JS responsável por toda a lógica -->
 </body>
 </html>

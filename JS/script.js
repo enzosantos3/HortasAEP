@@ -1,5 +1,8 @@
+// Aguarda o carregamento do DOM antes de executar qualquer código
+// Isso garante que os elementos da página estejam prontos para manipulação
 document.addEventListener('DOMContentLoaded', () => {
     // --- DADOS ---
+    // Lista de hortas com suas informações (nome, localização, status, etc.)
     const hortas = [
         { id: 1, nome: "Horta Comunitária Jardim Alvorada", endereco: "Jardim Alvorada - Zona Norte", bairro: "Jardim Alvorada", zona: "Norte", descricao: "Horta comunitária voltada para produção de hortaliças e plantas medicinais, atendendo famílias da região norte de Maringá", status: "ativa", participantes: 25, area: 800, cultivos: ["Alface", "Couve", "Cebolinha", "Plantas medicinais"], coordenadas: { lat: -23.3945, lng: -51.9388 } },
         { id: 2, nome: "Horta Comunitária Conjunto Habitacional Inocente Vila Nova", endereco: "Conjunto Habitacional Inocente Vila Nova - Zona Sul", bairro: "Inocente Vila Nova", zona: "Sul", descricao: "Projeto de agricultura urbana que beneficia moradores do conjunto habitacional com produção de alimentos orgânicos", status: "ativa", participantes: 18, area: 600, cultivos: ["Tomate", "Pimentão", "Rúcula", "Manjericão"], coordenadas: { lat: -23.4345, lng: -51.9188 } },
@@ -12,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // --- ELEMENTOS DO DOM ---
+    // Referências aos elementos HTML usados para busca, filtros, estatísticas e lista de hortas
     const searchInput = document.getElementById('searchInput');
     const zoneFilter = document.getElementById('zoneFilter');
     const statusFilter = document.getElementById('statusFilter');
@@ -25,13 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingModal = document.getElementById('loadingModal');
 
     // --- ESTADO DA APLICAÇÃO ---
+    // Variáveis que controlam o mapa, marcadores e localização do usuário
     let map;
     let markers = [];
     let userLocation = null;
 
     // --- FUNÇÕES AUXILIARES ---
 
-    // Função debounce para otimizar a busca
+    // Função debounce: usada para evitar chamadas repetidas de renderização durante digitação
     const debounce = (func, delay) => {
         let timeout;
         return (...args) => {
@@ -40,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
-    // Calcula a distância entre dois pontos (fórmula de Haversine)
+    // Calcula a distância entre dois pontos geográficos (coordenadas) usando a fórmula de Haversine
     const haversineDistance = (coords1, coords2) => {
         const toRad = x => (x * Math.PI) / 180;
         const R = 6371; // Raio da Terra em km
@@ -57,11 +62,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- FUNÇÕES PRINCIPAIS ---
-
+    // Mostra ou esconde o modal de carregamento
     const showLoadingModal = (show) => {
         loadingModal.style.display = show ? 'flex' : 'none';
     };
 
+     // Inicializa o mapa centrado em Maringá usando Leaflet.js
     const initializeMap = () => {
         map = L.map('map').setView([-23.41, -51.93], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -70,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }).addTo(map);
     };
 
+     // Obtém a localização atual do usuário se ele permitir
     const getUserLocation = () => {
         return new Promise((resolve) => {
             if (navigator.geolocation) {
@@ -93,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Atualiza os números das estatísticas (totais, participantes, área)
     const updateStatistics = (hortasFiltradas) => {
         totalHortasEl.textContent = hortas.length;
 
@@ -106,19 +114,20 @@ document.addEventListener('DOMContentLoaded', () => {
         areaTotalEl.textContent = areaTotal;
     };
 
+    // Renderiza a lista de hortas e os marcadores no mapa com base nos filtros e ordenação
     const render = () => {
-        // Limpa mapa e lista
+        // Limpa marcadores antigos do mapa
         markers.forEach(marker => map.removeLayer(marker));
         markers = [];
         hortasList.innerHTML = '';
 
-        // Obter valores dos filtros
+        // Captura os valores dos filtros
         const searchTerm = searchInput.value.toLowerCase();
         const zona = zoneFilter.value;
         const status = statusFilter.value;
         const sortBy = sortSelect.value;
 
-        // Filtrar hortas
+        // Aplica ordenação baseada no filtro selecionado
         let hortasFiltradas = hortas.filter(h => {
             const searchMatch = h.nome.toLowerCase().includes(searchTerm) ||
                                 h.bairro.toLowerCase().includes(searchTerm) ||
@@ -128,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return searchMatch && zonaMatch && statusMatch;
         });
 
-        // Ordenar hortas
+        // Atualiza o número de hortas encontradas
         hortasFiltradas.sort((a, b) => {
             switch (sortBy) {
                 case 'nome':
@@ -228,15 +237,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- INICIALIZAÇÃO ---
+    // Função principal que executa todas as etapas iniciais do sistema
     const init = async () => {
-        showLoadingModal(true);
-        initializeMap();
-        await getUserLocation();
-        updateStatistics();
-        render();
-        setupEventListeners();
-        showLoadingModal(false);
+        showLoadingModal(true); // Exibe o modal de carregamento
+        initializeMap();        // Inicializa o mapa
+        await getUserLocation(); // Obtém localização do usuário
+        updateStatistics();     // Atualiza estatísticas com base nos dados
+        render();               // Renderiza lista e mapa
+        setupEventListeners();  // Ativa eventos de interação
+        showLoadingModal(false); // Esconde o modal
     };
 
+    // Inicia o sistema 
     init();
 });
